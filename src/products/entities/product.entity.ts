@@ -10,8 +10,6 @@ export class Product {
   price: number;
   @Column("int")
   countSeal: number;
-  @ManyToOne(() => Provider, (provider) => provider.products, {
-    // eager: true,
-  })
+  @ManyToOne(() => Provider, (provider) => provider.products)
   provider: Provider;
 }
