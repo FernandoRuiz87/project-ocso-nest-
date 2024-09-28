@@ -3,7 +3,6 @@ import { CreateEmployeeDto } from "./dto/create-employee.dto";
 import { UpdateEmployeeDto } from "./dto/update-employee.dto";
 import { Employee } from "./entities/employee.entity";
 import { Repository } from "typeorm";
-import { v4 as uuid } from "uuid";
 import { InjectRepository } from "@nestjs/typeorm";
 
 @Injectable()
