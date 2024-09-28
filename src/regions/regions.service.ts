@@ -1,26 +1,47 @@
-import { Injectable } from '@nestjs/common';
-import { CreateRegionDto } from './dto/create-region.dto';
-import { UpdateRegionDto } from './dto/update-region.dto';
+import {
+  BadRequestException,
+  Injectable,
+  NotFoundException,
+} from "@nestjs/common";
+import { CreateRegionDto } from "./dto/create-region.dto";
+import { UpdateRegionDto } from "./dto/update-region.dto";
+import { Repository } from "typeorm";
+import { Region } from "./entities/region.entity";
+import { InjectRepository } from "@nestjs/typeorm";
 
 @Injectable()
 export class RegionsService {
+  constructor(
+    @InjectRepository(Repository)
+    private regionRepository: Repository<Region>
+  ) {}
   create(createRegionDto: CreateRegionDto) {
-    return 'This action adds a new region';
+    return this.regionRepository.save(createRegionDto);
   }
 
   findAll() {
-    return `This action returns all regions`;
+    return this.regionRepository.find();
   }
 
   findOne(id: number) {
-    return `This action returns a #${id} region`;
+    const region = this.regionRepository.findOneBy({
+      regionId: id,
+    });
+    if (!region) throw new NotFoundException("Region not found");
   }
 
-  update(id: number, updateRegionDto: UpdateRegionDto) {
-    return `This action updates a #${id} region`;
+  async update(id: number, updateRegionDto: UpdateRegionDto) {
+    const regionToUpdate = await this.regionRepository.preload({
+      regionId: id,
+      ...updateRegionDto,
+    });
+    if (!regionToUpdate) throw new BadRequestException();
+    return this.regionRepository.save(regionToUpdate);
   }
 
   remove(id: number) {
-    return `This action removes a #${id} region`;
+    return this.regionRepository.delete({
+      regionId: id,
+    });
   }
 }
