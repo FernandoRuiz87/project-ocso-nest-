@@ -12,7 +12,7 @@ import { InjectRepository } from "@nestjs/typeorm";
 @Injectable()
 export class RegionsService {
   constructor(
-    @InjectRepository(Repository)
+    @InjectRepository(Region)
     private regionRepository: Repository<Region>
   ) {}
   create(createRegionDto: CreateRegionDto) {
