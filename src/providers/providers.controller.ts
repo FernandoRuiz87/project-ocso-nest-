@@ -13,13 +13,10 @@ import {
 import { ProvidersService } from "./providers.service";
 import { CreateProviderDto } from "./dto/create-provider.dto";
 import { UpdateProviderDto } from "./dto/update-provider.dto";
-import { AuthGuard } from "src/auth/guard/auth.guard";
 import { UserData } from "src/auth/decorators/user.decorator";
 import { User } from "src/auth/entities/user.entity";
-import { Roles } from "src/auth/decorators/roles.decorator";
-import { RolesGuard } from "src/auth/guard/roles.guard";
+import { Auth } from "src/auth/decorators/auth.decorator";
 
-@UseGuards(AuthGuard)
 @Controller("providers")
 export class ProvidersController {
   constructor(private readonly providersService: ProvidersService) {}
@@ -29,8 +26,7 @@ export class ProvidersController {
     return this.providersService.create(createProviderDto);
   }
 
-  @Roles(["Admin"])
-  @UseGuards(RolesGuard)
+  @Auth("Employee")
   @Get()
   findAll(@UserData() user: User) {
     if (user.userRoles.includes("Employee"))
