@@ -22,7 +22,7 @@ export class AuthController {
   }
 
   @Post("login")
-  login(@Body() createUserDto: CreateUserDto) {
-    return this.authService.loginUser(createUserDto);
+  login(@Body() loginUserDto: LoginUserDto) {
+    return this.authService.loginUser(loginUserDto);
   }
 }
