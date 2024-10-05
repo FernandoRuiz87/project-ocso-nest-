@@ -48,12 +48,14 @@ export class ProductsService {
   }
 
   async remove(id: string) {
-    this.findOne(id);
-    this.productRepository.delete({
+    const product = await this.findOne(id);
+    if (!product) throw new NotFoundException();
+
+    await this.productRepository.delete({
       productId: id,
     });
     return {
-      message: `Objeto con id ${id} eliminado`,
+      message: `Object with id ${id} deleted`,
     };
   }
 }

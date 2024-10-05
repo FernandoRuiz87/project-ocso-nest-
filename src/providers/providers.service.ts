@@ -21,9 +21,13 @@ export class ProvidersService {
   }
 
   findOne(id: string) {
-    return this.providerRepository.findOneBy({
-      providerId: id,
+    const provider = this.providerRepository.findOne({
+      where: {
+        providerId: id,
+      },
     });
+    if (!provider) throw new NotFoundException();
+    return provider;
   }
 
   async findByName(name: string) {
@@ -43,9 +47,14 @@ export class ProvidersService {
     return this.providerRepository.save(product);
   }
 
-  remove(id: string) {
-    return this.providerRepository.delete({
+  async remove(id: string) {
+    const provider = await this.findOne(id);
+    if (!provider) throw new NotFoundException("");
+    this.providerRepository.delete({
       providerId: id,
     });
+    return {
+      message: `Object with id ${id} deleted`,
+    };
   }
 }

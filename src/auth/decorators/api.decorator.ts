@@ -1,5 +1,5 @@
 import { applyDecorators } from "@nestjs/common";
-import { ApiResponse } from "@nestjs/swagger";
+import { ApiResponse, ApiParam } from "@nestjs/swagger";
 
 export const ApiAuth = () => {
   return applyDecorators(
@@ -17,3 +17,12 @@ export const ApiAuth = () => {
     })
   );
 };
+
+// Decorator for UUID parameters
+export function ApiUUIDParam(name: string, description: string) {
+  return ApiParam({
+    name,
+    description,
+    type: "string",
+  });
+}
