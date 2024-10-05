@@ -40,7 +40,6 @@ export class AuthService {
   }
 
   async updateUser(userEmail, updateUserDto: UpdateUserDto) {
-    const RolesDB = ["Admin", "Employee", "Manager"];
     const newUserData = await this.userRepository.preload({
       userEmail,
       ...updateUserDto,
