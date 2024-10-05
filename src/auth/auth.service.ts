@@ -6,6 +6,8 @@ import { CreateUserDto } from "./dto/create-user.dto";
 import { JwtService } from "@nestjs/jwt";
 import { LoginUserDto } from "./dto/login-user.dto";
 import * as bcrypt from "bcrypt";
+import { UpdateUserDto } from "./dto/update-user.dto";
+import { UserData } from "./decorators/user.decorator";
 
 @Injectable()
 export class AuthService {
@@ -35,5 +37,15 @@ export class AuthService {
     };
     const token = this.jwtService.sign(payload);
     return token;
+  }
+
+  async updateUser(userEmail, updateUserDto: UpdateUserDto) {
+    const RolesDB = ["Admin", "Employee", "Manager"];
+    const newUserData = await this.userRepository.preload({
+      userEmail,
+      ...updateUserDto,
+    });
+    this.userRepository.save(newUserData);
+    return newUserData;
   }
 }
