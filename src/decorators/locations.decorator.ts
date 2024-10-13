@@ -2,10 +2,10 @@ import { ApiResponse, ApiOperation } from "@nestjs/swagger";
 import { applyDecorators } from "@nestjs/common";
 import { Provider } from "src/providers/entities/provider.entity";
 
-// Decorator for creating a new provider
-export function ApiCreateProvider() {
+// Decorator for creating a new location
+export function ApiCreateLocation() {
   return applyDecorators(
-    ApiOperation({ summary: "Create a new provider" }),
+    ApiOperation({ summary: "Create a new location" }),
     ApiResponse({
       status: 200,
       description: "Provider created successfully",
