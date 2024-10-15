@@ -25,6 +25,7 @@ export class AuthService {
     const user = await this.userRepository.findOne({
       where: { userEmail: loginUserDto.userEmail },
     });
+    if (!user) throw new UnauthorizedException("No estas autorizado");
     const match = await bcrypt.compare(
       loginUserDto.userPassword,
       user.userPassword
