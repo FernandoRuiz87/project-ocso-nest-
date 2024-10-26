@@ -54,7 +54,7 @@ export class ProvidersService {
       providerId: id,
     });
     return {
-      message: `Object with id ${id} deleted`,
+      message: `Provider deleted`,
     };
   }
 }

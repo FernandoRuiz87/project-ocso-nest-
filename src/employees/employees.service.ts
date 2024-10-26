@@ -52,7 +52,7 @@ export class EmployeesService {
       employeeId: id,
     });
     return {
-      message: `Object with id ${id} deleted`,
+      message: `Employee deleted`,
     };
   }
 }
