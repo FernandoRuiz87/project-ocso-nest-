@@ -8,5 +8,6 @@ import { Manager } from "./entities/manager.entity";
   imports: [TypeOrmModule.forFeature([Manager])],
   controllers: [ManagersController],
   providers: [ManagersService],
+  exports: [ManagersModule],
 })
 export class ManagersModule {}
