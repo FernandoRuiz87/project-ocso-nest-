@@ -63,8 +63,9 @@ export class EmployeesController {
     @UploadedFile() file: Express.Multer.File
   ) {
     const response = await this.awsService.uploadFile(file);
-
-    return this.employeesService.update(id, { employeePhoto: response });
+    return this.employeesService.update(id, {
+      employeePhoto: response,
+    });
   }
 
   @ApiFindAllEmployees()
