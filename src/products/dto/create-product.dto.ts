@@ -32,6 +32,6 @@ export class CreateProductDto extends Product {
   countSeal: number;
 
   @ApiProperty()
-  @IsObject()
-  provider: Provider;
+  @IsString()
+  provider: Provider | string;
 }

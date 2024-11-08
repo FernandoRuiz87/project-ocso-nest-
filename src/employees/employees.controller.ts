@@ -28,12 +28,16 @@ import {
 import { ROLES } from "src/auth/constants/roles.constants";
 import { Auth } from "src/auth/decorators/auth.decorator";
 import { ApiAuth, ApiUUIDParam } from "src/auth/decorators/api.decorator";
+import { AwsService } from "src/aws/aws.service";
 
 @ApiAuth()
 @ApiTags("Employees")
 @Controller("employees")
 export class EmployeesController {
-  constructor(private readonly employeesService: EmployeesService) {}
+  constructor(
+    private readonly employeesService: EmployeesService,
+    private readonly awsService: AwsService
+  ) {}
 
   @ApiCreateEmployee()
   @Auth(ROLES.MANAGER)
@@ -52,11 +56,15 @@ export class EmployeesController {
     status: 400,
     description: "Error uploading file",
   })
-  @Post("upload")
+  @Post(":id/upload")
   @UseInterceptors(FileInterceptor("file"))
-  uploadPhoto(@UploadedFile() file: Express.Multer.File) {
-    console.log(file);
-    return "ok";
+  async uploadPhoto(
+    @Param("id") id: string,
+    @UploadedFile() file: Express.Multer.File
+  ) {
+    const response = await this.awsService.uploadFile(file);
+
+    return this.employeesService.update(id, { employeePhoto: response });
   }
 
   @ApiFindAllEmployees()

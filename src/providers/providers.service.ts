@@ -17,7 +17,7 @@ export class ProvidersService {
   }
 
   findAll() {
-    return this.providerRepository.find();
+    return this.providerRepository.find({ relations: { products: true } });
   }
 
   findOne(id: string) {
@@ -25,6 +25,7 @@ export class ProvidersService {
       where: {
         providerId: id,
       },
+      relations: { products: true },
     });
     if (!provider) throw new NotFoundException();
     return provider;
