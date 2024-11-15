@@ -28,6 +28,11 @@ export class AuthController {
     @Body() createUserDto: CreateUserDto,
     @Param("id") id: string
   ) {
+    if (role === "Manager") {
+      return this.authService.registerManager(id, createUserDto);
+    } else if (role === "Employee") {
+      return this.authService.registerEmployee(id, createUserDto);
+    }
     if (
       createUserDto.userRoles.includes("Admin") ||
       createUserDto.userRoles.includes("Employee")
