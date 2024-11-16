@@ -69,9 +69,10 @@ export class AuthService {
     return token;
   }
 
-  async updateUser(userEmail, updateUserDto: UpdateUserDto) {
+  async updateUser(id: string, updateUserDto: UpdateUserDto) {
+    updateUserDto.userPassword = bcrypt.hashSync(updateUserDto.userPassword, 5);
     const newUserData = await this.userRepository.preload({
-      userEmail,
+      userId: id,
       ...updateUserDto,
     });
     this.userRepository.save(newUserData);

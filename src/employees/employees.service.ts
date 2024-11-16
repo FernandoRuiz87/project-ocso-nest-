@@ -19,7 +19,7 @@ export class EmployeesService {
 
   findAll() {
     return this.employeeRepository.find({
-      relations: { location: true },
+      relations: { location: true, user: true },
     });
   }
 
@@ -34,7 +34,7 @@ export class EmployeesService {
   findOne(id: string) {
     const employee = this.employeeRepository.findOne({
       where: { employeeId: id },
-      relations: { location: true },
+      relations: { location: true, user: true },
     });
     if (!employee) throw new NotFoundException();
     return employee;
