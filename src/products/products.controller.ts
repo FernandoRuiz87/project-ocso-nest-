@@ -79,7 +79,7 @@ export class ProductsController {
       message: "Object with id 3127d756-65ee-4ba8-819e-62f12ce4dc20 deleted",
     },
   })
-  @Auth(ROLES.MANAGER)
+  @Auth(ROLES.EMPLOYEE, ROLES.MANAGER)
   @Delete(":id")
   remove(@Param("id", new ParseUUIDPipe({ version: "4" })) id: string) {
     return this.productsService.remove(id);

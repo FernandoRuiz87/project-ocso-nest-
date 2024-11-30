@@ -23,13 +23,11 @@ export class Manager {
   @Column("text")
   managerPhoneNumber: string;
 
-  @OneToOne(() => Location)
+  @OneToOne(() => Location, { onDelete: "SET NULL", nullable: true })
   @JoinColumn({ name: "locationId" })
   location: Location | string;
 
-  @OneToOne(() => User)
-  @JoinColumn({
-    name: "userId",
-  })
+  @OneToOne(() => User, { onDelete: "SET NULL", nullable: true })
+  @JoinColumn({ name: "userId" })
   user: User;
 }

@@ -17,9 +17,9 @@ export class Product {
   @Column("int")
   countSeal: number;
 
-  @ManyToOne(() => Provider, (provider) => provider.products)
-  @JoinColumn({
-    name: "providerId",
+  @ManyToOne(() => Provider, (provider) => provider.products, {
+    onDelete: "CASCADE",
   })
+  @JoinColumn({ name: "providerId" })
   provider: Provider | string;
 }

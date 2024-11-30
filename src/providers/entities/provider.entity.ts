@@ -30,6 +30,6 @@ export class Provider {
   })
   providerPhoneNumber: string;
 
-  @OneToMany(() => Product, (photo) => photo.provider)
+  @OneToMany(() => Product, (product) => product.provider)
   products: Product[];
 }
